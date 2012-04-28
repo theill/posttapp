@@ -29,6 +29,7 @@ namespace com.posttapp {
 		
 		// Shared initialization code
 		void Initialize() {
+      Account = new Account();
 		}
 		
 		#endregion

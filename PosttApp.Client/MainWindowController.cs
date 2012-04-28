@@ -16,6 +16,7 @@ using System.Text;
 
 namespace com.posttapp {
   public partial class MainWindowController : MonoMac.AppKit.NSWindowController {
+    private NSMenu menu;
 
    #region Constructors
    
@@ -37,6 +38,7 @@ namespace com.posttapp {
    
     // Shared initialization code
     void Initialize() {
+      InitializeStatusBar();
     }
 
    #endregion
@@ -50,26 +52,38 @@ namespace com.posttapp {
 
     public override void WindowDidLoad() {
       base.WindowDidLoad();
-      InitializeStatusBar();
+    }
+
+    void OpenGettWebsite(object sender, EventArgs e) {
+      Console.WriteLine("Open ge.tt...");
+      // TODO:
+    }
+
+    void OpenPreferences(object sender, EventArgs e) {
+      Console.WriteLine("Open Preferences...");
+
+      NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
+      Window.MakeKeyAndOrderFront(this);
+    }
+
+    void QuitApplication(object sender, EventArgs e) {
+      Console.WriteLine("Quit application");
+
+      NSApplication.SharedApplication.Terminate(this);
     }
 
     void InitializeStatusBar() {
-      NSStatusBar sb = NSStatusBar.SystemStatusBar;
+      menu = new NSMenu();
+      menu.AddItem(new NSMenuItem("Open ge.tt...", OpenGettWebsite));
+      menu.AddItem(new NSMenuItem("Preferences...", OpenPreferences));
+      menu.AddItem(new NSMenuItem("Quit", QuitApplication));
 
-      NSMenu menu = new NSMenu();
-      NSMenuItem mi = new NSMenuItem("Quit", (sender, e) => {
-        Console.WriteLine("We got a click on quit!");
-      });
-      menu.AddItem(mi);
-
-      NSStatusItem mainItem = sb.CreateStatusItem(22);
-      mainItem.Title = "";
-      mainItem.Image = NSImage.ImageNamed("pin-black.png");
-      mainItem.Image.Template = true;
+      // creating the status item with a length of -2 is equivalent to the call
+      // [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength]
+      NSStatusItem mainItem = NSStatusBar.SystemStatusBar.CreateStatusItem(-2);
       mainItem.HighlightMode = true;
       mainItem.Menu = menu;
       mainItem.View = new StatusItemView(mainItem, ItemDropped);
-      mainItem.View.RegisterForDraggedTypes(new string[] {NSPasteboard.NSFilenamesType, NSPasteboard.NSFileContentsType, NSPasteboard.NSStringType });
     }
 
     bool IsAuthenticated {

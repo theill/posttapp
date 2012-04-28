@@ -88,6 +88,6 @@
     <Content Include="pin-orange.png" />
     <Content Include="pin-red.png" />
     <Content Include="pin-black.png" />
-    <Content Include="pin-blackTemplate.png" />
+    <Content Include="pin-white.png" />
   </ItemGroup>
 </Project>
