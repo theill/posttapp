@@ -4,7 +4,6 @@ using System.Drawing;
 
 using MonoMac.AppKit;
 using MonoMac.Foundation;
-
 #endregion
 
 namespace com.posttapp {
@@ -24,21 +23,23 @@ namespace com.posttapp {
 		}
 
 		public override void DrawRect(RectangleF dirtyRect) {
-//				base.DrawRect(dirtyRect);
+//      base.DrawRect(dirtyRect);
+      Console.WriteLine("Draw!");
 
-			NSImage drawnImage = null;
+      // http://undefinedvalue.com/2009/07/07/adding-custom-view-nsstatusitem
+      parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, isMenuVisible);
 
-			drawnImage = image;
+      NSImage drawnImage = image;
 
-			RectangleF centeredRect = RectangleF.Empty;
-			if (drawnImage != null) {
-				centeredRect = new RectangleF(0, 0, drawnImage.Size.Width, drawnImage.Size.Height);
-				// centeredRect = NSIntegralRect(centeredRect);
-				centeredRect.Y = ((this.Bounds.Right - this.Bounds.Left) / 2) - (drawnImage.Size.Height / 2);
+      RectangleF centeredRect = RectangleF.Empty;
+      if (drawnImage != null) {
+        centeredRect = new RectangleF(0, 0, drawnImage.Size.Width, drawnImage.Size.Height);
+        // centeredRect = NSIntegralRect(centeredRect);
+        centeredRect.Y = ((this.Bounds.Right - this.Bounds.Left) / 2) - (drawnImage.Size.Height / 2);
 
-				drawnImage.Draw(centeredRect, RectangleF.Empty, NSCompositingOperation.SourceOver, 1.0f);
-			}
-		}
+        drawnImage.Draw(centeredRect, RectangleF.Empty, NSCompositingOperation.SourceOver, 1.0f);
+      }
+    }
 
 		[Export("draggingEntered:")]
 		NSDragOperation DraggingEntered(NSDraggingInfo sender) {
@@ -48,26 +49,46 @@ namespace com.posttapp {
 
 		[Export("performDragOperation:")]
 		bool PerformDragOperation(NSDraggingInfo sender) {
-			NSPasteboard pb = sender.DraggingPasteboard;
+      NSPasteboard pb = sender.DraggingPasteboard;
 
-			foreach (var x in pb.PasteboardItems) {
-				Console.WriteLine("x => {0}", x.Types);
-				foreach (var y in x.Types) {
-					Console.WriteLine("{0} => {1}", y, pb.GetStringForType(y));
-				}
-			}
+      foreach (var x in pb.PasteboardItems) {
+        Console.WriteLine("x => {0}", x.Types);
+        foreach (var y in x.Types) {
+          Console.WriteLine("{0} => {1}", y, pb.GetStringForType(y));
+        }
+      }
 
-			if (!string.IsNullOrEmpty(pb.GetStringForType("public.file-url"))) {
-				if (dropped != null) {
-					dropped.Invoke(pb.GetStringForType("public.file-url"));
-				}
+      if (!string.IsNullOrEmpty(pb.GetStringForType("public.file-url"))) {
+        if (dropped != null) {
+          dropped.Invoke(pb.GetStringForType("public.file-url"));
+        }
 
-				return true;
-			}
+        return true;
+      }
 
-			Console.WriteLine("Got no string");
-			return false;
-		}
+      Console.WriteLine("Got no string");
+      return false;
+    }
+
+    private bool isMenuVisible;
+
+    public override void RightMouseDown(NSEvent theEvent) {
+      MouseDown(theEvent);
+    }
+
+    public override void MouseDown(NSEvent theEvent) {
+      Console.WriteLine("den er god");
+
+      if (isMenuVisible) {
+        isMenuVisible = false;
+      }
+      else {
+        isMenuVisible = true;
+        parentStatusItem.PopUpStatusItemMenu(parentStatusItem.Menu);
+      }
+
+      NeedsDisplay = true;
+    }
 
 		//- (BOOL)statusItemView:(BCStatusItemView *)view performDragOperation:(id <NSDraggingInfo>)info
 //{

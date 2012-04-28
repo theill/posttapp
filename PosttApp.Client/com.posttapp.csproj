@@ -83,5 +83,11 @@
     <Content Include="cloud.png" />
     <Content Include="cloud-big.png" />
     <Content Include="paperclip-icon.png" />
+    <Content Include="pin-blue.png" />
+    <Content Include="pin-green.png" />
+    <Content Include="pin-orange.png" />
+    <Content Include="pin-red.png" />
+    <Content Include="pin-black.png" />
+    <Content Include="pin-blackTemplate.png" />
   </ItemGroup>
 </Project>

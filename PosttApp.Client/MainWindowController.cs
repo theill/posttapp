@@ -17,36 +17,36 @@ using System.Text;
 namespace com.posttapp {
   public partial class MainWindowController : MonoMac.AppKit.NSWindowController {
 
-		#region Constructors
-		
+   #region Constructors
+   
     // Called when created from unmanaged code
     public MainWindowController(IntPtr handle) : base (handle) {
       Initialize();
     }
-		
+   
     // Called when created directly from a XIB file
     [Export ("initWithCoder:")]
     public MainWindowController(NSCoder coder) : base (coder) {
       Initialize();
     }
-		
+   
     // Call to load from the XIB/NIB file
     public MainWindowController() : base ("MainWindow") {
       Initialize();
     }
-		
+   
     // Shared initialization code
     void Initialize() {
     }
 
-		#endregion
+   #endregion
 
     //strongly typed window accessor
     public new MainWindow Window {
       get {
         return (MainWindow)base.Window;
-			}
-		}
+      }
+    }
 
     public override void WindowDidLoad() {
       base.WindowDidLoad();
@@ -59,13 +59,13 @@ namespace com.posttapp {
       NSMenu menu = new NSMenu();
       NSMenuItem mi = new NSMenuItem("Quit", (sender, e) => {
         Console.WriteLine("We got a click on quit!");
-
       });
       menu.AddItem(mi);
 
-      NSStatusItem mainItem = sb.CreateStatusItem(24);
+      NSStatusItem mainItem = sb.CreateStatusItem(22);
       mainItem.Title = "";
-      mainItem.Image = NSImage.ImageNamed("cloud.png");
+      mainItem.Image = NSImage.ImageNamed("pin-black.png");
+      mainItem.Image.Template = true;
       mainItem.HighlightMode = true;
       mainItem.Menu = menu;
       mainItem.View = new StatusItemView(mainItem, ItemDropped);
