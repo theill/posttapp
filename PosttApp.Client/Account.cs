@@ -5,6 +5,12 @@ namespace com.posttapp {
     public string Email { get; set; }
     public string Password { get; set; }
     public string AccessToken { get; set; }
+
+    public bool IsAuthenticated {
+      get {
+        return !string.IsNullOrEmpty(this.AccessToken);
+      }
+    }
   }
 }
 

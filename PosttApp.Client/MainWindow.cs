@@ -4,15 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
+using System.Drawing;
 
 #endregion
 
 namespace com.posttapp {
 	public partial class MainWindow : MonoMac.AppKit.NSWindow {
-    const string API_TOKEN = "tfvpf59kj3lyp66r3cm84vabirv34n29";
-    public GettProvider Gett = new GettProvider(API_TOKEN);
 
-    public Account Account { get; set; }
+    private Account account;
+    public Account Account {
+      get {
+        if (account == null) {
+          account = new Account();
+        }
+
+        return account;
+      }
+
+      set {
+        account = value ?? new Account();
+      }
+    }
 
 		#region Constructors
 		
@@ -29,10 +41,39 @@ namespace com.posttapp {
 		
 		// Shared initialization code
 		void Initialize() {
-      Account = new Account();
-		}
+    }
 		
 		#endregion
+
+    public void Activate() {
+      generalTabClicked(this);
+      this.MakeKeyAndOrderFront(this);
+    }
+
+    private void ResizeToFit(int width, int height) {
+      RectangleF frame = tabsView.Window.Frame;
+
+      float toolBarHeight = frame.Size.Height - this.ContentView.Frame.Height;
+      RectangleF frameResized = new RectangleF(frame.X, frame.Y + (frame.Size.Height - height) - toolBarHeight, width, height + toolBarHeight);
+
+      tabsView.Window.SetFrame(frameResized, true, true);
+    }
+
+    partial void generalTabClicked(MonoMac.Foundation.NSObject sender) {
+      Console.WriteLine("generalTabClicked");
+      tabsView.Select(tviGeneral);
+      this.Title = tabsView.Selected.Label;
+
+      ResizeToFit(412, 186);
+    }
+
+    partial void accountTabClicked(MonoMac.Foundation.NSObject sender) {
+      Console.WriteLine("accountTabClicked");
+      tabsView.Select(tviAccount);
+      this.Title = tabsView.Selected.Label;
+
+      ResizeToFit(412, 286);
+    }
 
     partial void forgotPasswordClicked(MonoMac.Foundation.NSObject sender) {
       Console.WriteLine("Forgot password clicked");
@@ -67,8 +108,8 @@ namespace com.posttapp {
 
       Console.WriteLine("Logging it with {0} and {1}", Account.Email, Account.Password);
 
-      var gett = new GettProvider("tfvpf59kj3lyp66r3cm84vabirv34n29");
-      gett.Authenticate(Account.Email, Account.Password, account => {
+      GettProvider.Instance.Authenticate(Account.Email, Account.Password, account => {
+        Console.WriteLine("Authenticated: {0}", account.AccessToken);
 
         // store retrieved access token for future requests
         this.Account.AccessToken = account.AccessToken;
@@ -83,6 +124,8 @@ namespace com.posttapp {
           txtForgotPassword.Hidden = true;
         });
       }, failed => {
+        Console.WriteLine("Failed to authenticate: {0}", failed);
+
         BeginInvokeOnMainThread(() => {
           SignOut();
         });

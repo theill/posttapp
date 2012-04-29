@@ -11,12 +11,12 @@ using MonoMac.AppKit;
 using System.Runtime.Serialization.Json;
 using System.Drawing;
 using System.Text;
-
 #endregion
 
 namespace com.posttapp {
   public partial class MainWindowController : MonoMac.AppKit.NSWindowController {
     private NSMenu menu;
+    private NSStatusItem mainItem;
 
    #region Constructors
    
@@ -63,7 +63,8 @@ namespace com.posttapp {
       Console.WriteLine("Open Preferences...");
 
       NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
-      Window.MakeKeyAndOrderFront(this);
+      Window.Activate();
+//      Window.MakeKeyAndOrderFront(this);
     }
 
     void QuitApplication(object sender, EventArgs e) {
@@ -80,31 +81,26 @@ namespace com.posttapp {
 
       // creating the status item with a length of -2 is equivalent to the call
       // [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength]
-      NSStatusItem mainItem = NSStatusBar.SystemStatusBar.CreateStatusItem(-2);
+      mainItem = NSStatusBar.SystemStatusBar.CreateStatusItem(-2);
       mainItem.HighlightMode = true;
       mainItem.Menu = menu;
       mainItem.View = new StatusItemView(mainItem, ItemDropped);
     }
 
-    bool IsAuthenticated {
-      get {
-        return !string.IsNullOrEmpty(Window.Account.AccessToken);
-      }
-    }
-
     void ItemDropped(string item) {
       Console.WriteLine("Item dropped: {0}", item);
 
-      if (IsAuthenticated) {
-        Window.Gett.CreateShare("test1", Window.Account.AccessToken, item.Replace("file://localhost", "").Replace("%20", " "));
+      if (Window.Account.IsAuthenticated) {
+        GettProvider.Instance.CreateShare("test1", Window.Account.AccessToken, item.Replace("file://localhost", "").Replace("%20", " "));
       }
       else {
-        Window.Gett.Authenticate(this.Window.Account.Email, this.Window.Account.Password, (account) => {
+        GettProvider.Instance.Authenticate(this.Window.Account.Email, this.Window.Account.Password, (account) => {
           // user is logged in
 
-          Window.Gett.CreateShare("test1", account.AccessToken, item.Replace("file://localhost", "").Replace("%20", " "));
+          GettProvider.Instance.CreateShare("test1", account.AccessToken, item.Replace("file://localhost", "").Replace("%20", " "));
         }, (error) => {
           // TODO: handle error message when uploading
+          Console.WriteLine("Got an error: {0}", error);
         });
       }
     }

@@ -8,90 +8,106 @@ using MonoMac.Foundation;
 
 namespace com.posttapp
 {
-	[Register ("MainWindow")]
-	partial class MainWindow
-	{
-		[Outlet]
-		MonoMac.AppKit.NSTextField txtEmail { get; set; }
+ [Register ("MainWindow")]
+ partial class MainWindow
+ {
+   [Outlet]
+   MonoMac.AppKit.NSTextField txtEmail { get; set; }
 
-		[Outlet]
-		MonoMac.AppKit.NSSecureTextField txtPassword { get; set; }
+   [Outlet]
+   MonoMac.AppKit.NSSecureTextField txtPassword { get; set; }
 
-		[Outlet]
-		MonoMac.AppKit.NSTextField txtForgotPassword { get; set; }
+   [Outlet]
+   MonoMac.AppKit.NSTextField txtForgotPassword { get; set; }
 
-		[Outlet]
-		MonoMac.AppKit.NSButton btnSignIn { get; set; }
+   [Outlet]
+   MonoMac.AppKit.NSButton btnSignIn { get; set; }
 
-		[Outlet]
-		MonoMac.AppKit.NSButton btnCreateAccount { get; set; }
+   [Outlet]
+   MonoMac.AppKit.NSButton btnCreateAccount { get; set; }
 
-		[Outlet]
-		MonoMac.AppKit.NSProgressIndicator inProgress { get; set; }
+   [Outlet]
+   MonoMac.AppKit.NSProgressIndicator inProgress { get; set; }
 
-		[Action ("forgotPasswordClicked:")]
-		partial void forgotPasswordClicked (MonoMac.Foundation.NSObject sender);
+   [Outlet]
+   MonoMac.AppKit.NSTabViewItem tviGeneral { get; set; }
 
-		[Action ("createAccountClicked:")]
-		partial void createAccountClicked (MonoMac.Foundation.NSObject sender);
+   [Outlet]
+   MonoMac.AppKit.NSTabViewItem tviAccount { get; set; }
 
-		[Action ("signInClicked:")]
-		partial void signInClicked (MonoMac.Foundation.NSObject sender);
-		
-		void ReleaseDesignerOutlets ()
-		{
-			if (txtEmail != null) {
-				txtEmail.Dispose ();
-				txtEmail = null;
-			}
+   [Outlet]
+   MonoMac.AppKit.NSTabView tabsView { get; set; }
 
-			if (txtPassword != null) {
-				txtPassword.Dispose ();
-				txtPassword = null;
-			}
+   [Action ("generalTabClicked:")]
+   partial void generalTabClicked (MonoMac.Foundation.NSObject sender);
 
-			if (txtForgotPassword != null) {
-				txtForgotPassword.Dispose ();
-				txtForgotPassword = null;
-			}
+   [Action ("accountTabClicked:")]
+   partial void accountTabClicked (MonoMac.Foundation.NSObject sender);
 
-			if (btnSignIn != null) {
-				btnSignIn.Dispose ();
-				btnSignIn = null;
-			}
+   [Action ("forgotPasswordClicked:")]
+   partial void forgotPasswordClicked (MonoMac.Foundation.NSObject sender);
 
-			if (btnCreateAccount != null) {
-				btnCreateAccount.Dispose ();
-				btnCreateAccount = null;
-			}
+   [Action ("createAccountClicked:")]
+   partial void createAccountClicked (MonoMac.Foundation.NSObject sender);
 
-			if (inProgress != null) {
-				inProgress.Dispose ();
-				inProgress = null;
-			}
-		}
-	}
+   [Action ("signInClicked:")]
+   partial void signInClicked (MonoMac.Foundation.NSObject sender);
+   
+   void ReleaseDesignerOutlets ()
+   {
+     if (txtEmail != null) {
+       txtEmail.Dispose ();
+       txtEmail = null;
+     }
 
-	[Register ("MainWindowController")]
-	partial class MainWindowController
-	{
-		[Outlet]
-		MonoMac.AppKit.NSTextField DirectUrlTextField { get; set; }
+     if (txtPassword != null) {
+       txtPassword.Dispose ();
+       txtPassword = null;
+     }
 
-		[Outlet]
-		MonoMac.AppKit.NSButton UploadButton { get; set; }
-		
-		void ReleaseDesignerOutlets ()
-		{
-			if (DirectUrlTextField != null) {
-				DirectUrlTextField.Dispose ();
-				DirectUrlTextField = null;
-			}
+     if (txtForgotPassword != null) {
+       txtForgotPassword.Dispose ();
+       txtForgotPassword = null;
+     }
 
-			if (UploadButton != null) {
-				UploadButton.Dispose ();
-				UploadButton = null;
-			}
-		}
-	}
+     if (btnSignIn != null) {
+       btnSignIn.Dispose ();
+       btnSignIn = null;
+     }
+
+     if (btnCreateAccount != null) {
+       btnCreateAccount.Dispose ();
+       btnCreateAccount = null;
+     }
+
+     if (inProgress != null) {
+       inProgress.Dispose ();
+       inProgress = null;
+     }
+
+     if (tviGeneral != null) {
+       tviGeneral.Dispose ();
+       tviGeneral = null;
+     }
+
+     if (tviAccount != null) {
+       tviAccount.Dispose ();
+       tviAccount = null;
+     }
+
+     if (tabsView != null) {
+       tabsView.Dispose ();
+       tabsView = null;
+     }
+   }
+ }
+
+ [Register ("MainWindowController")]
+ partial class MainWindowController
+ {
+   
+   void ReleaseDesignerOutlets ()
+   {
+   }
+ }
 }

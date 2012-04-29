@@ -8,8 +8,8 @@ using MonoMac.ObjCRuntime;
 
 namespace com.posttapp {
 	public partial class AppDelegate : NSApplicationDelegate {
-		MainWindowController mainWindowController;
-		
+		private MainWindowController mainWindowController;
+
 		public AppDelegate() {
 		}
 

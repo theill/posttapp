@@ -8,36 +8,37 @@ using MonoMac.Foundation;
 #endregion
 
 namespace com.posttapp {
-  public class StatusItemView : NSView {
-    public class XYMenuDelegate : NSMenuDelegate {
-      private StatusItemView view;
+  public class XYMenuDelegate : NSMenuDelegate {
+    private StatusItemView view;
 
-      public XYMenuDelegate(StatusItemView view) {
-        this.view = view;
-      }
-
-      public override void MenuWillOpen(NSMenu menu) {
-        Console.WriteLine("MenuWillOpen");
-        view.isMenuVisible = true;
-        view.NeedsDisplay = true;
-      }
-
-      public override void MenuWillHighlightItem(NSMenu menu, NSMenuItem menuItem) {
-        Console.WriteLine("MenuWillHighlightItem");
-      }
-
-      public override void MenuDidClose(NSMenu menu) {
-        Console.WriteLine("MenuDidClose");
-        view.isMenuVisible = false;
-        view.NeedsDisplay = true;
-      }
+    public XYMenuDelegate(StatusItemView view) {
+      this.view = view;
     }
 
-    private NSStatusItem parentStatusItem;
+    public override void MenuWillOpen(NSMenu menu) {
+      Console.WriteLine("MenuWillOpen");
+      view.IsMenuVisible = true;
+      view.NeedsDisplay = true;
+    }
+
+    public override void MenuWillHighlightItem(NSMenu menu, NSMenuItem menuItem) {
+      Console.WriteLine("MenuWillHighlightItem");
+    }
+
+    public override void MenuDidClose(NSMenu menu) {
+      Console.WriteLine("MenuDidClose");
+      view.IsMenuVisible = false;
+      view.NeedsDisplay = true;
+    }
+  }
+
+  public class StatusItemView : NSView {
+
+    private static NSStatusItem parentStatusItem;
     private Action<string> dropped;
     private NSImage icon;
     private NSImage highlightedIcon;
-    private bool isMenuVisible;
+    public bool IsMenuVisible;
 
     public StatusItemView(NSStatusItem statusItem, Action<string> dropped) {
       Console.WriteLine("StatusItemView");
@@ -53,10 +54,11 @@ namespace com.posttapp {
     }
 
     public override void DrawRect(RectangleF dirtyRect) {
+      Console.WriteLine("DrawRect");
       // http://undefinedvalue.com/2009/07/07/adding-custom-view-nsstatusitem
-      parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, isMenuVisible);
+      parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, IsMenuVisible);
 
-      NSImage drawnImage = isMenuVisible ? highlightedIcon : icon;
+      NSImage drawnImage = IsMenuVisible ? highlightedIcon : icon;
 
       RectangleF centeredRect = RectangleF.Empty;
       if (drawnImage != null) {
