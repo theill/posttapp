@@ -10,7 +10,7 @@ namespace com.posttapp {
 	public partial class AppDelegate : NSApplicationDelegate {
 		private MainWindowController mainWindowController;
     private NSStatusItem mainItem;
-    private Account Account;
+    public Account Account = new Account();
 
 		public AppDelegate() {
 		}
@@ -18,7 +18,6 @@ namespace com.posttapp {
 		public override void FinishedLaunching(NSObject notification) {
       Console.WriteLine("FinishedLaunching(notification={0})", notification);
       mainWindowController = new MainWindowController();
-      mainWindowController.Window.MakeKeyAndOrderFront(this);
 
       InitializeStatusBar();
     }
@@ -45,6 +44,9 @@ namespace com.posttapp {
       else {
         GettProvider.Instance.Authenticate(Account.Email, Account.Password, (account) => {
           // user is logged in
+
+          // store retrieved access token for future requests
+          Account.AccessToken = account.AccessToken;
 
           GettProvider.Instance.CreateShare("test1", account.AccessToken, item.Replace("file://localhost", "").Replace("%20", " "));
         }, (error) => {

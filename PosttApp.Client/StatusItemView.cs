@@ -4,6 +4,7 @@ using System.Drawing;
 
 using MonoMac.AppKit;
 using MonoMac.Foundation;
+using MonoMac.ObjCRuntime;
 
 #endregion
 
@@ -50,6 +51,8 @@ namespace com.posttapp {
       parentStatusItem = statusItem;
       parentStatusItem.Menu.Delegate = new XYMenuDelegate(this);
 
+      AddTrackingArea(new NSTrackingArea(this.Bounds, NSTrackingAreaOptions.CursorUpdate | NSTrackingAreaOptions.EnabledDuringMouseDrag | NSTrackingAreaOptions.ActiveInActiveApp | NSTrackingAreaOptions.ActiveInKeyWindow | NSTrackingAreaOptions.ActiveWhenFirstResponder, this, new NSDictionary()));
+
       RegisterForDraggedTypes(new string[] { NSPasteboard.NSFilenamesType, NSPasteboard.NSFileContentsType, NSPasteboard.NSStringType });
     }
 
@@ -68,10 +71,27 @@ namespace com.posttapp {
       }
     }
 
+    public override void AddTrackingArea(NSTrackingArea trackingArea) {
+      Console.WriteLine("AddTrackingArea(trackingArea={0}", trackingArea);
+      base.AddTrackingArea(trackingArea);
+    }
+
+    public override void UpdateTrackingAreas() {
+      Console.WriteLine("UpdateTrackingAreas");
+      base.UpdateTrackingAreas();
+    }
+
+    public override void CursorUpdate(NSEvent theEvent) {
+      Console.WriteLine("CursorUpdate");
+      base.CursorUpdate(theEvent);
+
+      NSCursor.DragCopyCursor.Set();
+    }
+
     [Export("draggingEntered:")]
     NSDragOperation DraggingEntered(NSDraggingInfo sender) {
-      Console.WriteLine("DraggingEntered");
-//       NSPasteboard pboard;
+      Console.WriteLine("DraggingEntered for {0}", this.Bounds);
+
       return NSDragOperation.All;
     }
 

@@ -51,7 +51,7 @@
 			<object class="NSWindowTemplate" id="748157544">
 				<int key="NSWindowStyleMask">3</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{590, 424}, {412, 286}}</string>
+				<string key="NSWindowRect">{{429, 806}, {412, 286}}</string>
 				<int key="NSWTFlags">1685586944</int>
 				<string key="NSWindowTitle">PosttApp</string>
 				<string key="NSWindowClass">MainWindow</string>
@@ -147,7 +147,6 @@
 							<string key="NSFrameSize">{412, 286}</string>
 							<reference key="NSSuperview" ref="312036702"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="294922416"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<object class="NSMutableArray" key="NSTabViewItems">
 								<bool key="EncodedWithXMLCoder">YES</bool>
@@ -439,7 +438,7 @@
 											<object class="NSTextField" id="923394818">
 												<reference key="NSNextResponder" ref="294922416"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{115, 197}, {280, 69}}</string>
+												<string key="NSFrame">{{115, 202}, {280, 64}}</string>
 												<reference key="NSSuperview" ref="294922416"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="268522526"/>
@@ -569,7 +568,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="47341106"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -634,14 +633,6 @@
 					<int key="connectionID">43</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">forgotPasswordClicked:</string>
-						<reference key="source" ref="748157544"/>
-						<reference key="destination" ref="40756274"/>
-					</object>
-					<int key="connectionID">42</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">txtForgotPassword</string>
 						<reference key="source" ref="748157544"/>
@@ -696,6 +687,14 @@
 						<reference key="destination" ref="47341106"/>
 					</object>
 					<int key="connectionID">80</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">forgotPasswordClicked:</string>
+						<reference key="source" ref="748157544"/>
+						<reference key="destination" ref="40756274"/>
+					</object>
+					<int key="connectionID">84</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1029,6 +1028,8 @@
 					<string>17.IBPluginDependency</string>
 					<string>18.IBPluginDependency</string>
 					<string>19.IBPluginDependency</string>
+					<string>2.IBNSWindowAutoPositionCentersHorizontal</string>
+					<string>2.IBNSWindowAutoPositionCentersVertical</string>
 					<string>2.IBPluginDependency</string>
 					<string>2.IBWindowTemplateEditedContentRect</string>
 					<string>2.NSWindowTemplate.visibleAtLaunch</string>
@@ -1079,6 +1080,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="NO"/>
+					<boolean value="NO"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{577, 363}, {320, 480}}</string>
 					<boolean value="NO"/>
@@ -1141,7 +1144,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">83</int>
+			<int key="maxID">84</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

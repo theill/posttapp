@@ -11,21 +11,6 @@ using System.Drawing;
 namespace com.posttapp {
 	public partial class MainWindow : MonoMac.AppKit.NSWindow {
 
-    private Account account;
-    public Account Account {
-      get {
-        if (account == null) {
-          account = new Account();
-        }
-
-        return account;
-      }
-
-      set {
-        account = value ?? new Account();
-      }
-    }
-
 		#region Constructors
 		
 		// Called when created from unmanaged code
@@ -78,20 +63,24 @@ namespace com.posttapp {
 
     partial void forgotPasswordClicked(MonoMac.Foundation.NSObject sender) {
       Console.WriteLine("Forgot password clicked");
+      NSWorkspace.SharedWorkspace.OpenUrl(NSUrl.FromString("http://ge.tt/"));
     }
 
     partial void createAccountClicked(MonoMac.Foundation.NSObject sender) {
       Console.WriteLine("Create account clicked");
+      NSWorkspace.SharedWorkspace.OpenUrl(NSUrl.FromString("http://ge.tt/"));
     }
 
     partial void signInClicked(MonoMac.Foundation.NSObject sender) {
       Console.WriteLine("Sign in clicked");
 
-      if (Account == null || string.IsNullOrEmpty(Account.AccessToken)) {
+      var appDelegate = (NSApplication.SharedApplication.Delegate as AppDelegate);
+
+      if (appDelegate.Account == null || !appDelegate.Account.IsAuthenticated) {
         SignIn();
       }
       else {
-        Account = null;
+        appDelegate.Account = null;
         SignOut();
       }
     }
@@ -101,19 +90,21 @@ namespace com.posttapp {
       btnCreateAccount.Hidden = txtForgotPassword.Hidden = true;
       inProgress.StartAnimation(this);
 
-      this.Account = new Account() {
+      var appDelegate = (NSApplication.SharedApplication.Delegate as AppDelegate);
+
+      appDelegate.Account = new Account() {
         Email = txtEmail.StringValue,
         Password = txtPassword.StringValue,
         AccessToken = string.Empty
       };
 
-      Console.WriteLine("Logging it with {0} and {1}", Account.Email, Account.Password);
+      Console.WriteLine("Logging it with {0} and {1}", appDelegate.Account.Email, appDelegate.Account.Password);
 
-      GettProvider.Instance.Authenticate(Account.Email, Account.Password, account => {
+      GettProvider.Instance.Authenticate(appDelegate.Account.Email, appDelegate.Account.Password, account => {
         Console.WriteLine("Authenticated: {0}", account.AccessToken);
 
         // store retrieved access token for future requests
-        this.Account.AccessToken = account.AccessToken;
+        appDelegate.Account.AccessToken = account.AccessToken;
 
         BeginInvokeOnMainThread(() => {
           inProgress.StopAnimation(this);
