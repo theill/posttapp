@@ -41,6 +41,7 @@ namespace com.posttapp {
 		
 		// Shared initialization code
 		void Initialize() {
+      Console.WriteLine("MainWindow.Initialize()");
     }
 		
 		#endregion

@@ -14,12 +14,13 @@ namespace com.posttapp {
 		}
 
 		public override void FinishedLaunching(NSObject notification) {
+      Console.WriteLine("FinishedLaunching(notification={0})", notification);
       mainWindowController = new MainWindowController();
-//      mainWindowController.Window.MakeKeyAndOrderFront(this);
+      mainWindowController.Window.MakeKeyAndOrderFront(this);
     }
 
-//    public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender) {
-//      return true;
-//    }
+    public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender) {
+      return false;
+    }
 	}
 }

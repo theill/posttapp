@@ -11,6 +11,7 @@ using MonoMac.AppKit;
 using System.Runtime.Serialization.Json;
 using System.Drawing;
 using System.Text;
+
 #endregion
 
 namespace com.posttapp {
@@ -46,6 +47,7 @@ namespace com.posttapp {
     //strongly typed window accessor
     public new MainWindow Window {
       get {
+        Console.WriteLine("Getting 'Window'");
         return (MainWindow)base.Window;
       }
     }

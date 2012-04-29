@@ -54,7 +54,7 @@ namespace com.posttapp {
     }
 
     public override void DrawRect(RectangleF dirtyRect) {
-      Console.WriteLine("DrawRect");
+      Console.WriteLine("DrawRect(dirtyRect={0})", dirtyRect);
       // http://undefinedvalue.com/2009/07/07/adding-custom-view-nsstatusitem
       parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, IsMenuVisible);
 
@@ -99,10 +99,12 @@ namespace com.posttapp {
     }
 
     public override void RightMouseDown(NSEvent theEvent) {
+      base.RightMouseDown(theEvent);
       MouseDown(theEvent);
     }
 
     public override void MouseDown(NSEvent theEvent) {
+      base.MouseDown(theEvent);
       parentStatusItem.PopUpStatusItemMenu(parentStatusItem.Menu);
       NeedsDisplay = true;
     }
