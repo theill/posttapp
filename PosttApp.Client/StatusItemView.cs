@@ -17,17 +17,15 @@ namespace com.posttapp {
     }
 
     public override void MenuWillOpen(NSMenu menu) {
-      Console.WriteLine("MenuWillOpen");
       view.IsMenuVisible = true;
       view.NeedsDisplay = true;
     }
+    
+    public override void MenuWillHighlightItem(NSMenu menu, NSMenuItem item) {
 
-    public override void MenuWillHighlightItem(NSMenu menu, NSMenuItem menuItem) {
-      Console.WriteLine("MenuWillHighlightItem");
     }
 
     public override void MenuDidClose(NSMenu menu) {
-      Console.WriteLine("MenuDidClose");
       view.IsMenuVisible = false;
       view.NeedsDisplay = true;
     }
@@ -51,8 +49,6 @@ namespace com.posttapp {
       parentStatusItem = statusItem;
       parentStatusItem.Menu.Delegate = new XYMenuDelegate(this);
 
-      AddTrackingArea(new NSTrackingArea(this.Bounds, NSTrackingAreaOptions.CursorUpdate | NSTrackingAreaOptions.EnabledDuringMouseDrag | NSTrackingAreaOptions.ActiveInActiveApp | NSTrackingAreaOptions.ActiveInKeyWindow | NSTrackingAreaOptions.ActiveWhenFirstResponder, this, new NSDictionary()));
-
       RegisterForDraggedTypes(new string[] { NSPasteboard.NSFilenamesType, NSPasteboard.NSFileContentsType, NSPasteboard.NSStringType });
     }
 
@@ -71,28 +67,10 @@ namespace com.posttapp {
       }
     }
 
-    public override void AddTrackingArea(NSTrackingArea trackingArea) {
-      Console.WriteLine("AddTrackingArea(trackingArea={0}", trackingArea);
-      base.AddTrackingArea(trackingArea);
-    }
-
-    public override void UpdateTrackingAreas() {
-      Console.WriteLine("UpdateTrackingAreas");
-      base.UpdateTrackingAreas();
-    }
-
-    public override void CursorUpdate(NSEvent theEvent) {
-      Console.WriteLine("CursorUpdate");
-      base.CursorUpdate(theEvent);
-
-      NSCursor.DragCopyCursor.Set();
-    }
-
     [Export("draggingEntered:")]
     NSDragOperation DraggingEntered(NSDraggingInfo sender) {
-      Console.WriteLine("DraggingEntered for {0}", this.Bounds);
-
-      return NSDragOperation.All;
+      // display "copy" icon when dragging over area
+      return NSDragOperation.Copy;
     }
 
     [Export("performDragOperation:")]
