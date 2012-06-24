@@ -23,7 +23,7 @@ Global
 		$0.TextStylePolicy = $2
 		$2.FileWidth = 120
 		$2.TabWidth = 2
-		$2.RemoveTrailingWhitespace = True
+		$2.IndentWidth = 2
 		$2.inheritsSet = VisualStudio
 		$2.inheritsScope = text/plain
 		$2.scope = text/x-csharp
@@ -42,10 +42,6 @@ Global
 		$3.WhileBraceForcement = AddBraces
 		$3.UsingBraceForcement = AddBraces
 		$3.FixedBraceForcement = AddBraces
-		$3.PlaceElseOnNewLine = True
-		$3.PlaceCatchOnNewLine = True
-		$3.PlaceFinallyOnNewLine = True
-		$3.PlaceWhileOnNewLine = True
 		$3.BeforeMethodDeclarationParentheses = False
 		$3.BeforeMethodCallParentheses = False
 		$3.BeforeConstructorDeclarationParentheses = False
@@ -61,10 +57,17 @@ Global
 		$4.IncludeInNewFiles = True
 		$0.TextStylePolicy = $5
 		$5.FileWidth = 120
-		$5.TabWidth = 4
+		$5.TabWidth = 2
+		$5.IndentWidth = 2
 		$5.inheritsSet = Mono
 		$5.inheritsScope = text/plain
 		$5.scope = text/plain
+		$0.TextStylePolicy = $6
+		$6.inheritsSet = null
+		$6.scope = application/vnd.apple-interface-builder
+		$0.XmlFormattingPolicy = $7
+		$7.inheritsSet = null
+		$7.scope = application/vnd.apple-interface-builder
 		version = 1.0
 	EndGlobalSection
 EndGlobal

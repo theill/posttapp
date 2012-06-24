@@ -4,13 +4,14 @@ using System.Drawing;
 
 using MonoMac.AppKit;
 using MonoMac.Foundation;
-using MonoMac.ObjCRuntime;
+using System.Web;
+
 
 #endregion
 
 namespace com.posttapp {
   public class XYMenuDelegate : NSMenuDelegate {
-    private StatusItemView view;
+    StatusItemView view;
 
     public XYMenuDelegate(StatusItemView view) {
       this.view = view;
@@ -30,13 +31,13 @@ namespace com.posttapp {
       view.NeedsDisplay = true;
     }
   }
-
+  
   public class StatusItemView : NSView {
 
-    private static NSStatusItem parentStatusItem;
-    private Action<string> dropped;
-    private NSImage icon;
-    private NSImage highlightedIcon;
+    static NSStatusItem parentStatusItem;
+    Action<string> dropped;
+    NSImage icon;
+    NSImage highlightedIcon;
     public bool IsMenuVisible;
 
     public StatusItemView(NSStatusItem statusItem, Action<string> dropped) {
@@ -83,12 +84,14 @@ namespace com.posttapp {
           Console.WriteLine("{0} => {1}", y, pb.GetStringForType(y));
         }
       }
-
-      if (!string.IsNullOrEmpty(pb.GetStringForType("public.file-url"))) {
+      
+      var file = pb.GetStringForType("public.file-url");
+      if (!string.IsNullOrEmpty(file)) {
         if (dropped != null) {
-          dropped.Invoke(pb.GetStringForType("public.file-url"));
+          file = HttpUtility.UrlDecode(file);
+          dropped.Invoke(file);
         }
-
+        
         return true;
       }
 

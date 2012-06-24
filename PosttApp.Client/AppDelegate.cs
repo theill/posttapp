@@ -1,9 +1,7 @@
 #region Using directives
 using System;
-using System.Drawing;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
-using MonoMac.ObjCRuntime;
 #endregion
 
 namespace com.posttapp {
@@ -31,13 +29,13 @@ namespace com.posttapp {
       // [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength]
       mainItem = NSStatusBar.SystemStatusBar.CreateStatusItem(-2);
       mainItem.HighlightMode = true;
-      mainItem.Menu = this.menu;
+      mainItem.Menu = menu;
       mainItem.View = new StatusItemView(mainItem, ItemDropped);
     }
 
     void ItemDropped(string item) {
       Console.WriteLine("Item dropped: {0}", item);
-
+      
       if (Account.IsAuthenticated) {
         GettProvider.Instance.CreateShare("test1", Account.AccessToken, item.Replace("file://localhost", "").Replace("%20", " "));
       }
