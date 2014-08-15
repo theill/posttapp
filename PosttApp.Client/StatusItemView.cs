@@ -56,7 +56,8 @@ namespace com.posttapp {
     public override void DrawRect(RectangleF dirtyRect) {
       Console.WriteLine("DrawRect(dirtyRect={0})", dirtyRect);
       // http://undefinedvalue.com/2009/07/07/adding-custom-view-nsstatusitem
-      parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, IsMenuVisible);
+//      parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, IsMenuVisible);
+      parentStatusItem.DrawStatusBarBackground(this.Bounds, true);
 
       NSImage drawnImage = IsMenuVisible ? highlightedIcon : icon;
 
