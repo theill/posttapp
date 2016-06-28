@@ -86,6 +86,8 @@ namespace com.posttapp {
     }
 
     private void SignIn() {
+      this.MakeFirstResponder (null);
+
       txtEmail.Enabled = txtPassword.Enabled = btnSignIn.Enabled = false;
       btnCreateAccount.Hidden = txtForgotPassword.Hidden = true;
       inProgress.StartAnimation(this);

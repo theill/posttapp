@@ -12,7 +12,7 @@ using MonoMac.AppKit;
 namespace com.posttapp {
   public class GettProvider {
     private const string API_URL = "https://open.ge.tt/1";
-    private const string API_TOKEN = "token";
+    private const string API_TOKEN = "REPLACE_THIS_TOKEN";
     private static GettProvider _instance;
 
     public static GettProvider Instance {
@@ -63,21 +63,21 @@ namespace com.posttapp {
       );
     }
 
-    public void CreateShare(string title, string accessToken, string filename) {
+    public void CreateShare(string title, string accessToken, string filename, Action<string> urlCallback) {
       Console.WriteLine("CreateShare(title={0},accessToken={1},filename={2})", title, accessToken, filename);
 
       // TODO: consider 'title' (as payload)
       _post<Share>(string.Format("{0}/shares/create?accesstoken={1}", API_URL, accessToken), string.Empty, (success) => {
         Console.WriteLine("Shared created with {0}", success);
 
-        CreateFile((success as Share).Name, filename, accessToken);
+        CreateFile((success as Share).Name, filename, accessToken, urlCallback);
       }, (error) => {
         Console.WriteLine("Failed to create share: ", error);
       }
       );
     }
 
-    public void CreateFile(string sharename, string filename, string accessToken) {
+    public void CreateFile(string sharename, string filename, string accessToken, Action<string> urlCallback) {
       Console.WriteLine("CreateFile(sharename={0},filename={1},accessToken={2})", sharename, filename, accessToken);
 
       string jsonPayload = "{\"filename\": \"" + Path.GetFileName(filename).ToLower() + "\"}";
@@ -86,12 +86,10 @@ namespace com.posttapp {
 
         ShareFile sf = (success as ShareFile);
 
-        // placing link into clipboard
-        NSPasteboard pb = NSPasteboard.GeneralPasteboard;
-        pb.DeclareTypes(new string[] {NSPasteboard.NSStringType}, null);
-        pb.SetStringForType(sf.GetUrl, NSPasteboard.NSStringType);
-        Console.WriteLine("File will be available for download from {0}", sf.GetUrl);
-        
+				if (urlCallback != null) {
+					urlCallback (sf.GetUrl);
+				}
+
         PushFile(sf.Upload.PutUrl, new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read, 4 * 1024, false));
 
       }, (error) => {
