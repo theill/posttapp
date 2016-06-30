@@ -1,9 +1,9 @@
 using System;
+using System.Web;
 using System.Drawing;
 
 using MonoMac.AppKit;
 using MonoMac.Foundation;
-using System.Web;
 
 namespace com.posttapp {
   public class XYMenuDelegate : NSMenuDelegate {
@@ -52,8 +52,7 @@ namespace com.posttapp {
     public override void DrawRect(RectangleF dirtyRect) {
       Console.WriteLine("DrawRect(dirtyRect={0})", dirtyRect);
       // http://undefinedvalue.com/2009/07/07/adding-custom-view-nsstatusitem
-      //      parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, IsMenuVisible);
-      parentStatusItem.DrawStatusBarBackground(this.Bounds, true);
+      parentStatusItem.DrawStatusBarBackground(this.Bounds, IsMenuVisible);
 
       NSImage drawnImage = IsMenuVisible ? highlightedIcon : icon;
 

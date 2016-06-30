@@ -49,7 +49,8 @@ namespace com.posttapp {
             AccessToken = success.AccessToken
           }
           );
-        } else {
+        }
+        else {
           loginFailed.Invoke("Unable to find account with specified username/password");
         }
       }, (error) => {
@@ -82,9 +83,9 @@ namespace com.posttapp {
 
         ShareFile sf = (success as ShareFile);
 
-				if (urlCallback != null) {
-					urlCallback (sf.GetUrl);
-				}
+        if (urlCallback != null) {
+          urlCallback(sf.GetUrl);
+        }
 
         PushFile(sf.Upload.PutUrl, new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read, 4 * 1024, false));
 
@@ -120,7 +121,8 @@ namespace com.posttapp {
             DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(T));
             completed.Invoke((T)jsonSerializer.ReadObject(s));
           }
-        } catch (Exception x) {
+        }
+        catch (Exception x) {
           Console.WriteLine("Unable to GET from {0}", uri);
           Console.WriteLine(x);
 
@@ -171,35 +173,38 @@ namespace com.posttapp {
                 if (rsp.StatusCode == HttpStatusCode.OK) {
                   using (Stream responseStream = rsp.GetResponseStream()) {
                     Console.WriteLine("Got a response stream");
-                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(T), new [] {
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(T), new[] {
                       typeof(User),
                       typeof(Storage)
                     }
                     );
                     completed.Invoke((T)jsonSerializer.ReadObject(responseStream));
                   }
-                } else {
+                }
+                else {
                   Console.WriteLine("Det var ikke godt: {0}: {1}", rsp.StatusCode, rsp.StatusDescription);
                   failed.Invoke(rsp.StatusDescription);
                 }
-              } catch (WebException x) {
+              }
+              catch (WebException x) {
                 Console.WriteLine("Unable to POST to {0}: {1}", uri, x.Message);
                 Console.WriteLine(x);
 
                 string failedMessage = "Failed";
-//                using (StreamReader sr = new StreamReader(x.Response.GetResponseStream())) {
-//                  Console.WriteLine("Got response (from bad request)");
-//                  failedMessage = sr.ReadToEnd();
-//                }
+                //                using (StreamReader sr = new StreamReader(x.Response.GetResponseStream())) {
+                //                  Console.WriteLine("Got response (from bad request)");
+                //                  failedMessage = sr.ReadToEnd();
+                //                }
 
                 failed.Invoke(failedMessage);
               }
             }, null);
-          } catch (WebException x) {
+          }
+          catch (WebException x) {
             Console.WriteLine("Nah: x = {0}", x);
 
-//            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(T), new [] { typeof(User), typeof(Storage) });
-//            completed.Invoke((T)jsonSerializer.ReadObject(x.Response.GetResponseStream()));
+            //            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(T), new [] { typeof(User), typeof(Storage) });
+            //            completed.Invoke((T)jsonSerializer.ReadObject(x.Response.GetResponseStream()));
           }
         }
       }, req);
@@ -215,7 +220,7 @@ namespace com.posttapp {
       Console.WriteLine("Writing entire file to stream, 2k at a time");
       req.ReadWriteTimeout = int.MaxValue;
       req.Timeout = int.MaxValue;
-//     req.SendChunked = true;
+      //     req.SendChunked = true;
       req.AllowWriteStreamBuffering = false;
       req.KeepAlive = true;
 
@@ -228,12 +233,12 @@ namespace com.posttapp {
 
           try {
             Console.WriteLine("Seeking to begining");
-//            fs.Seek(0, SeekOrigin.Begin);
-//            Console.WriteLine("Copying...");
-//            fs.CopyTo(s);
-//            Console.WriteLine("Closing");
-//            fs.Close();
-//            Console.WriteLine("Closed!");
+            //            fs.Seek(0, SeekOrigin.Begin);
+            //            Console.WriteLine("Copying...");
+            //            fs.CopyTo(s);
+            //            Console.WriteLine("Closing");
+            //            fs.Close();
+            //            Console.WriteLine("Closed!");
 
             int length = 1024 * 128;
             byte[] buffer = new byte[length];
@@ -252,7 +257,8 @@ namespace com.posttapp {
             fs.Close();
 
             Console.WriteLine("Got a total bytes of {0}", totalBytes);
-          } catch (Exception x) {
+          }
+          catch (Exception x) {
             Console.WriteLine("Failed: {0}", x.Message);
             Console.WriteLine(x);
 
@@ -270,7 +276,8 @@ namespace com.posttapp {
                 Console.WriteLine("Got response");
                 completed.Invoke(sr.ReadToEnd());
               }
-            } catch (Exception x) {
+            }
+            catch (Exception x) {
               Console.WriteLine("Unable to PUT from {0}", uri);
               Console.WriteLine(x);
 
