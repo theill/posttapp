@@ -3,17 +3,18 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Net;
+using System.Configuration;
 
 namespace com.posttapp {
   public class GettProvider {
-    private const string API_URL = "https://open.ge.tt/1";
-    private const string API_TOKEN = "REPLACE_WITH_API_TOKEN";
-    private static GettProvider _instance;
+    const string API_URL = "https://open.ge.tt/1";
+    static GettProvider _instance;
 
     public static GettProvider Instance {
       get {
         if (_instance == null) {
-          _instance = new GettProvider(API_TOKEN);
+          var gettApiToken = ConfigurationSettings.AppSettings["GettApiToken"];
+          _instance = new GettProvider(gettApiToken);
         }
 
         return _instance;

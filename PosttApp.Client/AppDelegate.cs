@@ -18,12 +18,6 @@ namespace com.posttapp {
       Console.WriteLine("FinishedLaunching(notification={0})", notification);
       mainWindowController = new MainWindowController();
 
-      foreach (DictionaryEntry item in Environment.GetEnvironmentVariables()) {
-        Console.WriteLine(item.Key + ": " + item.Value);
-      }
-
-      Console.WriteLine("key => " + Environment.GetEnvironmentVariable("GETT_API_TOKEN"));
-
       InitializeStatusBar();
 
       _query = new NSMetadataQuery();
