@@ -94,7 +94,7 @@ namespace com.posttapp {
 
       var appDelegate = (NSApplication.SharedApplication.Delegate as AppDelegate);
 
-      appDelegate.Account = new Account() {
+      appDelegate.Account = new Account {
         Email = txtEmail.StringValue,
         Password = txtPassword.StringValue,
         AccessToken = string.Empty

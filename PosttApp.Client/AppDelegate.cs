@@ -15,6 +15,7 @@ namespace com.posttapp {
 
     public override void DidFinishLaunching(NSNotification notification) {
       Console.WriteLine("FinishedLaunching(notification={0})", notification);
+
       mainWindowController = new MainWindowController();
 
       InitializeStatusBar();
