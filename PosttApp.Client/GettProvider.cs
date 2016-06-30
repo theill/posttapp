@@ -28,7 +28,7 @@ namespace com.posttapp {
     }
 
     public void Authenticate(string username, string password, Action<Account> loggedIn, Action<string> loginFailed) {
-      Login login = new Login() { ApiKey = apiKey, Email = username, Password = password };
+      Login login = new Login { ApiKey = apiKey, Email = username, Password = password };
 
       string jsonPayload = string.Empty;
       using (MemoryStream ms = new MemoryStream()) {

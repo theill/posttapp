@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Collections;
 
 using MonoMac.Foundation;
 using MonoMac.AppKit;
@@ -26,7 +25,6 @@ namespace com.posttapp {
       NSNotificationCenter.DefaultCenter.AddObserver(NSMetadataQuery.DidUpdateNotification, ScreenCaptureChange, _query);
       NSNotificationCenter.DefaultCenter.AddObserver(NSMetadataQuery.DidFinishGatheringNotification, ScreenCaptureChange, _query);
 
-      //_query.Delegate = this;
       _query.Predicate = NSPredicate.FromFormat("kMDItemIsScreenCapture = 1");
       _query.StartQuery();
     }

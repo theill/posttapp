@@ -6,32 +6,29 @@
 //
 using MonoMac.Foundation;
 
-namespace com.posttapp
-{
-	[Register ("AppDelegate")]
-	partial class AppDelegate
-	{
-		[Outlet]
-		MonoMac.AppKit.NSMenu menu { get; set; }
+namespace com.posttapp {
+  [Register("AppDelegate")]
+  partial class AppDelegate {
+    [Outlet]
+    MonoMac.AppKit.NSMenu menu { get; set; }
 
-		[Action ("launchGettWebsiteClicked:")]
-		partial void launchGettWebsiteClicked (MonoMac.Foundation.NSObject sender);
+    [Action("launchGettWebsiteClicked:")]
+    partial void launchGettWebsiteClicked(MonoMac.Foundation.NSObject sender);
 
-		[Action ("preferencesClicked:")]
-		partial void preferencesClicked (MonoMac.Foundation.NSObject sender);
+    [Action("preferencesClicked:")]
+    partial void preferencesClicked(MonoMac.Foundation.NSObject sender);
 
-		[Action ("helpClicked:")]
-		partial void helpClicked (MonoMac.Foundation.NSObject sender);
+    [Action("helpClicked:")]
+    partial void helpClicked(MonoMac.Foundation.NSObject sender);
 
-		[Action ("quitClicked:")]
-		partial void quitClicked (MonoMac.Foundation.NSObject sender);
-		
-		void ReleaseDesignerOutlets ()
-		{
-			if (menu != null) {
-				menu.Dispose ();
-				menu = null;
-			}
-		}
-	}
+    [Action("quitClicked:")]
+    partial void quitClicked(MonoMac.Foundation.NSObject sender);
+
+    void ReleaseDesignerOutlets() {
+      if (menu != null) {
+        menu.Dispose();
+        menu = null;
+      }
+    }
+  }
 }
