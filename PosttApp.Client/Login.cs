@@ -1,25 +1,21 @@
-#region Using directives
-using System;
 using System.Runtime.Serialization;
-
-#endregion
 
 namespace com.posttapp {
   [DataContract]
   public class Login {
-    [DataMember(Name="apikey")]
+    [DataMember(Name = "apikey")]
     public string ApiKey {
       get;
       set;
     }
 
-    [DataMember(Name="email")]
+    [DataMember(Name = "email")]
     public string Email {
       get;
       set;
     }
 
-    [DataMember(Name="password")]
+    [DataMember(Name = "password")]
     public string Password {
       get;
       set;

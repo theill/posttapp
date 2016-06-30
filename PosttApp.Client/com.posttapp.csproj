@@ -28,6 +28,14 @@
     <CodeSigningKey>Mac Developer</CodeSigningKey>
     <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
     <UseSGen>false</UseSGen>
+    <EnvironmentVariables>
+      <EnvironmentVariables>
+        <Variable name="GETT_API_TOKEN" value="svend" />
+      </EnvironmentVariables>
+    </EnvironmentVariables>
+    <HttpClientHandler>HttpClientHandler</HttpClientHandler>
+    <TlsProvider>Default</TlsProvider>
+    <LinkMode>None</LinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -42,6 +50,9 @@
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <CodeSignEntitlements>Entitlements.plist</CodeSignEntitlements>
     <UseSGen>false</UseSGen>
+    <HttpClientHandler>HttpClientHandler</HttpClientHandler>
+    <TlsProvider>Default</TlsProvider>
+    <LinkMode>None</LinkMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

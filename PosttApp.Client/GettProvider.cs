@@ -1,18 +1,13 @@
-#region Using directives
 using System;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Net;
 
-using MonoMac.AppKit;
-
-#endregion
-
 namespace com.posttapp {
   public class GettProvider {
     private const string API_URL = "https://open.ge.tt/1";
-    private const string API_TOKEN = "REPLACE_THIS_TOKEN";
+    private const string API_TOKEN = "REPLACE_WITH_API_TOKEN";
     private static GettProvider _instance;
 
     public static GettProvider Instance {

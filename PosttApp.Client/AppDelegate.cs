@@ -1,148 +1,128 @@
-#region Using directives
 using System;
 using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
-#endregion
 
-namespace com.posttapp
-{
-	public partial class AppDelegate : NSApplicationDelegate
-	{
-		private MainWindowController mainWindowController;
-		private NSStatusItem mainItem;
-		public Account Account = new Account ();
+namespace com.posttapp {
+  public partial class AppDelegate : NSApplicationDelegate {
+    MainWindowController mainWindowController;
+    NSStatusItem mainItem;
 
-		NSMetadataQuery _query;
+    public Account Account = new Account();
 
-		public AppDelegate ()
-		{
-		}
+    NSMetadataQuery _query;
 
-		public override void FinishedLaunching (NSObject notification)
-		{
-			Console.WriteLine ("FinishedLaunching(notification={0})", notification);
-			mainWindowController = new MainWindowController ();
+    public override void DidFinishLaunching(NSNotification notification) {
+      base.DidFinishLaunching(notification);
 
-			InitializeStatusBar ();
+      Console.WriteLine("FinishedLaunching(notification={0})", notification);
+      mainWindowController = new MainWindowController();
 
-			_query = new NSMetadataQuery ();
+      foreach (System.Collections.DictionaryEntry item in Environment.GetEnvironmentVariables()) {
+        Console.WriteLine("got: " + item.Key + " => " + item.Value);
+      }
 
-			NSNotificationCenter.DefaultCenter.AddObserver (NSMetadataQuery.DidStartGatheringNotification, ScreenCaptureChange, _query);
-			NSNotificationCenter.DefaultCenter.AddObserver (NSMetadataQuery.DidUpdateNotification, ScreenCaptureChange, _query);
-			NSNotificationCenter.DefaultCenter.AddObserver (NSMetadataQuery.DidFinishGatheringNotification, ScreenCaptureChange, _query);
+      InitializeStatusBar();
 
-			//_query.Delegate = this;
-			_query.Predicate = NSPredicate.FromFormat ("kMDItemIsScreenCapture = 1");
-			_query.StartQuery ();
-		}
+      _query = new NSMetadataQuery();
 
-		void ScreenCaptureChange (NSNotification notification)
-		{
-			Console.WriteLine ("The " + notification.Name + " message was posted");
-			//NSMetadataQuery query = notification.Object as NSMetadataQuery;
-			//if (query != null) {
-			//	foreach (var x in query.Results) {
-			//		Console.WriteLine (x.Path);
-			//	}
-			//}
+      NSNotificationCenter.DefaultCenter.AddObserver(NSMetadataQuery.DidStartGatheringNotification, ScreenCaptureChange, _query);
+      NSNotificationCenter.DefaultCenter.AddObserver(NSMetadataQuery.DidUpdateNotification, ScreenCaptureChange, _query);
+      NSNotificationCenter.DefaultCenter.AddObserver(NSMetadataQuery.DidFinishGatheringNotification, ScreenCaptureChange, _query);
 
-			if (notification.Name == "NSMetadataQueryDidUpdateNotification") {
-				NSMetadataQuery query = notification.Object as NSMetadataQuery;
-				var latestItem = query != null ? query.Results.LastOrDefault () : null;
-				if (latestItem != null) {
-					ItemDropped (latestItem.Path);
-				}
-			}
-			//var x = notification.UserInfo ["kMDQueryUpdateAddedItems"];
-			//var y = notification.UserInfo ["kMDQueryUpdateChangedItems"];
-		}
+      //_query.Delegate = this;
+      _query.Predicate = NSPredicate.FromFormat("kMDItemIsScreenCapture = 1");
+      _query.StartQuery();
+    }
 
-		public override void WillTerminate (NSNotification notification)
-		{
-			_query.StopQuery ();
-			_query.Delegate = null;
-			_query = null;
-		}
+    void ScreenCaptureChange(NSNotification notification) {
+      Console.WriteLine("The " + notification.Name + " message was posted");
+      if (notification.Name == "NSMetadataQueryDidUpdateNotification") {
+        NSMetadataQuery query = notification.Object as NSMetadataQuery;
+        var latestItem = query != null ? query.Results.LastOrDefault() : null;
+        if (latestItem != null) {
+          ItemDropped(latestItem.Path);
+        }
+      }
+    }
 
-		public override bool ApplicationShouldTerminateAfterLastWindowClosed (NSApplication sender)
-		{
-			return false;
-		}
+    public override void WillTerminate(NSNotification notification) {
+      _query.StopQuery();
+      _query.Delegate = null;
+      _query = null;
+    }
 
-		void InitializeStatusBar ()
-		{
-			// creating the status item with a length of -2 is equivalent to the call
-			// [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength]
-			mainItem = NSStatusBar.SystemStatusBar.CreateStatusItem (-2);
-			mainItem.HighlightMode = true;
-			mainItem.Menu = menu;
-			mainItem.View = new StatusItemView (mainItem, ItemDropped);
-		}
+    public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender) {
+      return false;
+    }
 
-		void ItemDropped (string item)
-		{
-			Console.WriteLine ("Item dropped: {0}", item);
+    void InitializeStatusBar() {
+      // creating the status item with a length of -2 is equivalent to the call
+      // [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength]
+      mainItem = NSStatusBar.SystemStatusBar.CreateStatusItem(-2);
+      mainItem.HighlightMode = true;
+      mainItem.Menu = menu;
+      mainItem.View = new StatusItemView(mainItem, ItemDropped);
+    }
 
-			if (Account.IsAuthenticated) {
-				CreateShare (Account, item.Replace ("file://localhost", "").Replace ("%20", " "));
-			}
-			else {
-				GettProvider.Instance.Authenticate (Account.Email, Account.Password, (account) => {
-					// user is logged in
+    void ItemDropped(string item) {
+      Console.WriteLine("Item dropped: {0}", item);
 
-					// store retrieved access token for future requests
-					Account.AccessToken = account.AccessToken;
+      if (Account.IsAuthenticated) {
+        CreateShare(Account, item.Replace("file://localhost", "").Replace("%20", " "));
+      }
+      else {
+        GettProvider.Instance.Authenticate(Account.Email, Account.Password, (account) => {
+          // user is logged in
 
-					CreateShare (account, item.Replace ("file://localhost", "").Replace ("%20", " "));
-				}, (error) => {
-					// TODO: handle error message when uploading
-					Console.WriteLine ("Got an error: {0}", error);
-				});
-			}
-		}
+          // store retrieved access token for future requests
+          Account.AccessToken = account.AccessToken;
 
-		private void CreateShare (Account account, string path) {
-			GettProvider.Instance.CreateShare (
-				"test1", 
-				account.AccessToken,
-				path,
-				(url) => {
-					BeginInvokeOnMainThread (() => {
-						// placing link into clipboard
-						NSPasteboard pb = NSPasteboard.GeneralPasteboard;
-						pb.DeclareTypes (new string [] { NSPasteboard.NSStringType }, null);
-						pb.SetStringForType (url, NSPasteboard.NSStringType);
-						Console.WriteLine ("File will be available for download from {0}", url);
-					});
-				}
-			);
-		}
+          CreateShare(account, item.Replace("file://localhost", "").Replace("%20", " "));
+        }, (error) => {
+          // TODO: handle error message when uploading
+          Console.WriteLine("Got an error: {0}", error);
+        });
+      }
+    }
 
-		partial void launchGettWebsiteClicked (MonoMac.Foundation.NSObject sender)
-		{
-			Console.WriteLine ("Open ge.tt...");
-			NSWorkspace.SharedWorkspace.OpenUrl (NSUrl.FromString ("http://ge.tt/"));
-		}
+    private void CreateShare(Account account, string path) {
+      GettProvider.Instance.CreateShare(
+        "test1",
+        account.AccessToken,
+        path,
+        (url) => {
+          BeginInvokeOnMainThread(() => {
+            // placing link into clipboard
+            NSPasteboard pb = NSPasteboard.GeneralPasteboard;
+            pb.DeclareTypes(new string[] { NSPasteboard.NSStringType }, null);
+            pb.SetStringForType(url, NSPasteboard.NSStringType);
+            Console.WriteLine("File will be available for download from {0}", url);
+          });
+        }
+      );
+    }
 
-		partial void preferencesClicked (MonoMac.Foundation.NSObject sender)
-		{
-			Console.WriteLine ("Open Preferences...");
+    partial void launchGettWebsiteClicked(MonoMac.Foundation.NSObject sender) {
+      Console.WriteLine("Open ge.tt...");
+      NSWorkspace.SharedWorkspace.OpenUrl(NSUrl.FromString("http://ge.tt/"));
+    }
 
-			NSApplication.SharedApplication.ActivateIgnoringOtherApps (true);
-			mainWindowController.Window.Activate ();
-		}
+    partial void preferencesClicked(MonoMac.Foundation.NSObject sender) {
+      Console.WriteLine("Open Preferences...");
 
-		partial void helpClicked (MonoMac.Foundation.NSObject sender)
-		{
-			Console.WriteLine ("Open help section...");
-			NSWorkspace.SharedWorkspace.OpenUrl (NSUrl.FromString ("http://posttapp.com/help"));
-		}
+      NSApplication.SharedApplication.ActivateIgnoringOtherApps(true);
+      mainWindowController.Window.Activate();
+    }
 
-		partial void quitClicked (MonoMac.Foundation.NSObject sender)
-		{
-			Console.WriteLine ("Quit application");
-			NSApplication.SharedApplication.Terminate (this);
-		}
-	}
+    partial void helpClicked(MonoMac.Foundation.NSObject sender) {
+      Console.WriteLine("Open help section...");
+      NSWorkspace.SharedWorkspace.OpenUrl(NSUrl.FromString("https://postt.io/help"));
+    }
+
+    partial void quitClicked(MonoMac.Foundation.NSObject sender) {
+      Console.WriteLine("Quit application");
+      NSApplication.SharedApplication.Terminate(this);
+    }
+  }
 }

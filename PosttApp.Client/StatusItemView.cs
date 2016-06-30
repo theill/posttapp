@@ -1,4 +1,3 @@
-#region Using directives
 using System;
 using System.Drawing;
 
@@ -6,12 +5,9 @@ using MonoMac.AppKit;
 using MonoMac.Foundation;
 using System.Web;
 
-
-#endregion
-
 namespace com.posttapp {
   public class XYMenuDelegate : NSMenuDelegate {
-    StatusItemView view;
+    readonly StatusItemView view;
 
     public XYMenuDelegate(StatusItemView view) {
       this.view = view;
@@ -21,7 +17,7 @@ namespace com.posttapp {
       view.IsMenuVisible = true;
       view.NeedsDisplay = true;
     }
-    
+
     public override void MenuWillHighlightItem(NSMenu menu, NSMenuItem item) {
 
     }
@@ -31,7 +27,7 @@ namespace com.posttapp {
       view.NeedsDisplay = true;
     }
   }
-  
+
   public class StatusItemView : NSView {
 
     static NSStatusItem parentStatusItem;
@@ -56,7 +52,7 @@ namespace com.posttapp {
     public override void DrawRect(RectangleF dirtyRect) {
       Console.WriteLine("DrawRect(dirtyRect={0})", dirtyRect);
       // http://undefinedvalue.com/2009/07/07/adding-custom-view-nsstatusitem
-//      parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, IsMenuVisible);
+      //      parentStatusItem.DrawStatusBarBackgroundInRectwithHighlight(this.Bounds, IsMenuVisible);
       parentStatusItem.DrawStatusBarBackground(this.Bounds, true);
 
       NSImage drawnImage = IsMenuVisible ? highlightedIcon : icon;
@@ -85,14 +81,14 @@ namespace com.posttapp {
           Console.WriteLine("{0} => {1}", y, pb.GetStringForType(y));
         }
       }
-      
+
       var file = pb.GetStringForType("public.file-url");
       if (!string.IsNullOrEmpty(file)) {
         if (dropped != null) {
           file = HttpUtility.UrlDecode(file);
           dropped.Invoke(file);
         }
-        
+
         return true;
       }
 
@@ -112,20 +108,20 @@ namespace com.posttapp {
     }
 
     //- (BOOL)statusItemView:(BCStatusItemView *)view performDragOperation:(id <NSDraggingInfo>)info
-//{
-// NSPasteboard *pb = [info draggingPasteboard];
-// if(![pb availableTypeFromArray:[NSArray arrayWithObjects:@"public.file-url", nil]])
-//   return NSDragOperationNone;
-//
-// NSString *urlString = [[info draggingPasteboard] stringForType:@"public.file-url"];
-// NSURL *url = [NSURL URLWithString:urlString];
-// if([url isFileURL])
-// {
-//   [log debug:@"Enqueing dropped file: %@", [url path]];
-//   [self processScreenshotAtPath:[url path] modifiedAtDate:[NSDate date]]; // we could use the file's modified date?
-//   return YES;
-// }
-// return NO;
-//}
+    //{
+    // NSPasteboard *pb = [info draggingPasteboard];
+    // if(![pb availableTypeFromArray:[NSArray arrayWithObjects:@"public.file-url", nil]])
+    //   return NSDragOperationNone;
+    //
+    // NSString *urlString = [[info draggingPasteboard] stringForType:@"public.file-url"];
+    // NSURL *url = [NSURL URLWithString:urlString];
+    // if([url isFileURL])
+    // {
+    //   [log debug:@"Enqueing dropped file: %@", [url path]];
+    //   [self processScreenshotAtPath:[url path] modifiedAtDate:[NSDate date]]; // we could use the file's modified date?
+    //   return YES;
+    // }
+    // return NO;
+    //}
   }
 }

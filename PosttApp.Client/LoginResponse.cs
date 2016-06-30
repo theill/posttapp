@@ -1,31 +1,27 @@
-#region Using directives
-using System;
 using System.Runtime.Serialization;
-
-#endregion
 
 namespace com.posttapp {
   [DataContract]
   public class LoginResponse {
-    [DataMember(Name="accesstoken")]
+    [DataMember(Name = "accesstoken")]
     public string AccessToken {
       get;
       set;
     }
 
-    [DataMember(Name="refreshtoken")]
+    [DataMember(Name = "refreshtoken")]
     public string RefreshToken {
       get;
       set;
     }
 
-    [DataMember(Name="expires")]
+    [DataMember(Name = "expires")]
     public long Expires {
       get;
       set;
     }
 
-    [DataMember(Name="user")]
+    [DataMember(Name = "user")]
     public User User {
       get;
       set;
