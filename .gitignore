@@ -1,3 +1,4 @@
 *.userprefs
 **/bin/*
 **/obj/*
+PosttApp.Client/app.config
