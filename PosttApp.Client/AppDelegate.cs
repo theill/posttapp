@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Collections;
+
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
@@ -13,14 +15,14 @@ namespace com.posttapp {
     NSMetadataQuery _query;
 
     public override void DidFinishLaunching(NSNotification notification) {
-      base.DidFinishLaunching(notification);
-
       Console.WriteLine("FinishedLaunching(notification={0})", notification);
       mainWindowController = new MainWindowController();
 
-      foreach (System.Collections.DictionaryEntry item in Environment.GetEnvironmentVariables()) {
-        Console.WriteLine("got: " + item.Key + " => " + item.Value);
+      foreach (DictionaryEntry item in Environment.GetEnvironmentVariables()) {
+        Console.WriteLine(item.Key + ": " + item.Value);
       }
+
+      Console.WriteLine("key => " + Environment.GetEnvironmentVariable("GETT_API_TOKEN"));
 
       InitializeStatusBar();
 

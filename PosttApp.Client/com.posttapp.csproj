@@ -28,14 +28,14 @@
     <CodeSigningKey>Mac Developer</CodeSigningKey>
     <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
     <UseSGen>false</UseSGen>
-    <EnvironmentVariables>
-      <EnvironmentVariables>
-        <Variable name="GETT_API_TOKEN" value="svend" />
-      </EnvironmentVariables>
-    </EnvironmentVariables>
     <HttpClientHandler>HttpClientHandler</HttpClientHandler>
     <TlsProvider>Default</TlsProvider>
     <LinkMode>None</LinkMode>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeExecute" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -81,16 +81,16 @@
     <Compile Include="MainMenu.xib.designer.cs">
       <DependentUpon>MainMenu.xib</DependentUpon>
     </Compile>
-    <Compile Include="Share.cs" />
-    <Compile Include="ShareFile.cs" />
     <Compile Include="StatusItemView.cs" />
-    <Compile Include="Upload.cs" />
-    <Compile Include="Login.cs" />
-    <Compile Include="LoginResponse.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="Storage.cs" />
-    <Compile Include="Account.cs" />
     <Compile Include="GettProvider.cs" />
+    <Compile Include="models\Account.cs" />
+    <Compile Include="models\Login.cs" />
+    <Compile Include="models\Share.cs" />
+    <Compile Include="models\ShareFile.cs" />
+    <Compile Include="models\Storage.cs" />
+    <Compile Include="models\Upload.cs" />
+    <Compile Include="models\User.cs" />
+    <Compile Include="models\LoginResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
@@ -104,16 +104,17 @@
   <Import Project="$(MSBuildExtensionsPath)\Mono\MonoMac\v0.0\Mono.MonoMac.targets" />
   <ItemGroup>
     <Folder Include="Images\" />
+    <Folder Include="models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cloud.png" />
-    <Content Include="cloud-big.png" />
-    <Content Include="paperclip-icon.png" />
-    <Content Include="pin-blue.png" />
-    <Content Include="pin-green.png" />
-    <Content Include="pin-orange.png" />
-    <Content Include="pin-red.png" />
-    <Content Include="pin-black.png" />
-    <Content Include="pin-white.png" />
+    <Content Include="Images\cloud.png" />
+    <Content Include="Images\cloud-big.png" />
+    <Content Include="Images\paperclip-icon.png" />
+    <Content Include="Images\pin-black.png" />
+    <Content Include="Images\pin-blue.png" />
+    <Content Include="Images\pin-green.png" />
+    <Content Include="Images\pin-orange.png" />
+    <Content Include="Images\pin-red.png" />
+    <Content Include="Images\pin-white.png" />
   </ItemGroup>
 </Project>
