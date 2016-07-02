@@ -14,7 +14,7 @@ using System.Text;
 
 #endregion
 
-namespace io.postt {
+namespace io.postt.macos {
   public partial class MainWindowController : MonoMac.AppKit.NSWindowController {
 
     #region Constructors

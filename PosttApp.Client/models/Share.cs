@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace io.postt {
+namespace io.postt.macos {
   [DataContract]
   public class Share {
     [DataMember(Name = "sharename")]

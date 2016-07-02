@@ -1,6 +1,6 @@
 using System;
 
-namespace io.postt {
+namespace io.postt.macos {
   public class Account {
     public string Email { get; set; }
     public string Password { get; set; }

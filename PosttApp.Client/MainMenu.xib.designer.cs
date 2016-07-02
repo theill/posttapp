@@ -6,7 +6,7 @@
 //
 using MonoMac.Foundation;
 
-namespace io.postt {
+namespace io.postt.macos {
   [Register("AppDelegate")]
   partial class AppDelegate {
     [Outlet]

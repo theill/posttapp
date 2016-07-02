@@ -5,7 +5,7 @@ using System.Text;
 using System.Net;
 using System.Configuration;
 
-namespace io.postt.providers {
+namespace io.postt.macos.providers {
   public class GettProvider {
     const string API_URL = "https://open.ge.tt/1";
     static GettProvider _instance;

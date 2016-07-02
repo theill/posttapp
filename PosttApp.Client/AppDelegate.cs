@@ -4,9 +4,9 @@ using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 
-using io.postt.providers;
+using io.postt.macos.providers;
 
-namespace io.postt {
+namespace io.postt.macos {
 	public partial class AppDelegate : NSApplicationDelegate {
 		MainWindowController mainWindowController;
 		NSStatusItem mainItem;

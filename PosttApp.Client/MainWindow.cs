@@ -3,9 +3,9 @@ using MonoMac.Foundation;
 using MonoMac.AppKit;
 using System.Drawing;
 
-using io.postt.providers;
+using io.postt.macos.providers;
 
-namespace io.postt {
+namespace io.postt.macos {
 	public partial class MainWindow : MonoMac.AppKit.NSWindow {
 
 		#region Constructors

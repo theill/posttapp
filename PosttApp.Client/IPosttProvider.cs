@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace io.postt {
+namespace io.postt.macos {
 	public interface IPosttProvider {
 		bool Authenticated { get; }
 

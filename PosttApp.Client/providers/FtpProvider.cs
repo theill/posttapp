@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace io.postt.providers {
+namespace io.postt.macos.providers {
 	public class FtpProvider : IPosttProvider {
 		bool _authenticated;
 		string username;

@@ -1,7 +1,7 @@
 using System;
 using MonoMac.AppKit;
 
-namespace io.postt {
+namespace io.postt.macos {
   class MainClass {
     static void Main(string[] args) {
       Console.WriteLine("Initializing...");

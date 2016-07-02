@@ -5,7 +5,7 @@ using System.Drawing;
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 
-namespace io.postt {
+namespace io.postt.macos {
   public class XYMenuDelegate : NSMenuDelegate {
     readonly StatusItemView view;
 

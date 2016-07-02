@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace io.postt {
+namespace io.postt.macos {
   [DataContract]
   public class User {
     [DataMember(Name = "userid")]
