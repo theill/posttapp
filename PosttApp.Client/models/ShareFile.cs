@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace com.posttapp {
+namespace io.postt {
   [DataContract]
   public class ShareFile {
     [DataMember(Name = "sharename")]

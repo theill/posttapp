@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace com.posttapp {
+namespace io.postt {
   [DataContract]
   public class Share {
     [DataMember(Name = "sharename")]

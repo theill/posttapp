@@ -1,14 +1,11 @@
-#region Using directives
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 using System.Drawing;
 
-#endregion
+using io.postt.providers;
 
-namespace com.posttapp {
+namespace io.postt {
 	public partial class MainWindow : MonoMac.AppKit.NSWindow {
 
 		#region Constructors

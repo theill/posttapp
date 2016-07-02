@@ -14,7 +14,7 @@ using System.Text;
 
 #endregion
 
-namespace com.posttapp {
+namespace io.postt {
   public partial class MainWindowController : MonoMac.AppKit.NSWindowController {
 
     #region Constructors

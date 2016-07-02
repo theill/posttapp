@@ -5,7 +5,7 @@ using System.Drawing;
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 
-namespace com.posttapp {
+namespace io.postt {
   public class XYMenuDelegate : NSMenuDelegate {
     readonly StatusItemView view;
 
@@ -65,13 +65,13 @@ namespace com.posttapp {
     }
 
     [Export("draggingEntered:")]
-    NSDragOperation DraggingEntered(NSDraggingInfo sender) {
+    public override NSDragOperation DraggingEntered(NSDraggingInfo sender) {
       // display "copy" icon when dragging over area
       return NSDragOperation.Copy;
     }
 
     [Export("performDragOperation:")]
-    bool PerformDragOperation(NSDraggingInfo sender) {
+    public override bool PerformDragOperation(NSDraggingInfo sender) {
       NSPasteboard pb = sender.DraggingPasteboard;
 
       foreach (var x in pb.PasteboardItems) {

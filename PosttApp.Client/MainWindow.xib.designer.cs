@@ -6,7 +6,7 @@
 //
 using MonoMac.Foundation;
 
-namespace com.posttapp
+namespace io.postt
 {
 	[Register ("MainWindow")]
 	partial class MainWindow

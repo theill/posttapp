@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace com.posttapp {
+namespace io.postt {
   [DataContract]
   public class Login {
     [DataMember(Name = "apikey")]

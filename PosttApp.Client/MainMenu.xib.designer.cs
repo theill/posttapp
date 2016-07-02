@@ -6,7 +6,7 @@
 //
 using MonoMac.Foundation;
 
-namespace com.posttapp {
+namespace io.postt {
   [Register("AppDelegate")]
   partial class AppDelegate {
     [Outlet]
