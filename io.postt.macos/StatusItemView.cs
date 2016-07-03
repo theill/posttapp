@@ -43,7 +43,10 @@ namespace io.postt.macos {
       icon = NSImage.ImageNamed("pin-black.png");
       highlightedIcon = NSImage.ImageNamed("pin-white.png");
 
-      parentStatusItem = statusItem;
+			icon = NSImage.ImageNamed(NSImageName.StatusAvailable);
+			highlightedIcon = NSImage.ImageNamed(NSImageName.StatusNone);
+
+			parentStatusItem = statusItem;
       parentStatusItem.Menu.Delegate = new XYMenuDelegate(this);
 
       RegisterForDraggedTypes(new string[] { NSPasteboard.NSFilenamesType, NSPasteboard.NSFileContentsType, NSPasteboard.NSStringType });

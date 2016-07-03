@@ -2,3 +2,5 @@
 **/bin/*
 **/obj/*
 PosttApp.Client/app.config
+.DS_Store
+packages/
