@@ -43,18 +43,18 @@ namespace io.postt.macos.providers {
 				});
 			}
 			catch (Exception x) {
-				Console.WriteLine("Not good, we got: " + x.Message);
+				Console.WriteLine("Not good, we got: " + x.ToString());
 			}
 		}
 
-		public void Upload(string path, string filename, Action<string> urlCallback) {
+		public void Upload(string srcPathFile, string dstFile, Action<string> urlCallback) {
 			try {
-				var ftpClient = (FtpWebRequest)WebRequest.Create("ftp://www.theill.com/http/stuff/screenshots/" + filename);
+				var ftpClient = (FtpWebRequest)WebRequest.Create("ftp://www.theill.com/http/stuff/screenshots/" + dstFile);
 				ftpClient.Credentials = new System.Net.NetworkCredential(this.username, this.password);
 				ftpClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
 				ftpClient.UseBinary = true;
 				//ftpClient.KeepAlive = true;
-				System.IO.FileInfo fi = new System.IO.FileInfo(path + filename);
+				System.IO.FileInfo fi = new System.IO.FileInfo(srcPathFile);
 				ftpClient.ContentLength = fi.Length;
 				byte[] buffer = new byte[4096];
 				int bytes = 0;
@@ -100,7 +100,7 @@ namespace io.postt.macos.providers {
 
 				//response.Close();
 
-				urlCallback("done");
+				urlCallback("http://www.theill.com/stuff/screenshots/" + dstFile);
 			}
 			catch (Exception x) {
 				Console.WriteLine("Exception: " + x.Message);
